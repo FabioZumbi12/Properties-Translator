@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -218,6 +219,9 @@ namespace PropertiesLoader
                     page = page.Remove(last, page.Length - last);
 
                     textBox1.Text = page;
+
+                    label3.ForeColor = System.Drawing.Color.Black;
+                    label3.Text = "No errors";
                 }
                 catch (Exception ex)
                 {
@@ -229,7 +233,7 @@ namespace PropertiesLoader
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (dataGridView1.Rows.Count > 0 && dataGridView1.SelectedRows.Count > 0)
             {
                 dataGridView1.SelectedRows[0].Cells["Translation"].Value = textBox1.Text;
             }
@@ -237,7 +241,7 @@ namespace PropertiesLoader
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (dataGridView1.Rows.Count > 0 && dataGridView1.SelectedRows.Count > 0)
             {
                 int index = dataGridView1.SelectedRows[0].Index + 1;
                 if (index < dataGridView1.Rows.Count)
@@ -258,7 +262,7 @@ namespace PropertiesLoader
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (dataGridView1.Rows.Count > 0 && dataGridView1.SelectedRows.Count > 0)
             {
                 dataGridView1.SelectedRows[0].Cells["Translation"].Value = textBox1.Text;
 
@@ -269,6 +273,11 @@ namespace PropertiesLoader
                     dataGridView1.FirstDisplayedScrollingRowIndex = index;
                     dataGridView1.Rows[index].Selected = true;
                     textBox4.Text = dataGridView1.Rows[index].Cells["Line"].Value?.ToString();
+
+                    if (checkBox1.Checked && textBox1.Text.Split(' ').Length > 2)
+                    {                        
+                        button2.PerformClick();
+                    }
                 }
             }
         }

@@ -59,6 +59,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -219,15 +220,15 @@
             this.textBox1.Location = new System.Drawing.Point(183, 483);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(551, 49);
+            this.textBox1.Size = new System.Drawing.Size(499, 49);
             this.textBox1.TabIndex = 20;
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(740, 483);
+            this.button2.Location = new System.Drawing.Point(688, 483);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(106, 23);
+            this.button2.Size = new System.Drawing.Size(116, 23);
             this.button2.TabIndex = 21;
             this.button2.Text = "Try To Translate to";
             this.button2.UseVisualStyleBackColor = true;
@@ -236,9 +237,9 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(740, 535);
+            this.button3.Location = new System.Drawing.Point(688, 535);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(50, 23);
+            this.button3.Size = new System.Drawing.Size(55, 23);
             this.button3.TabIndex = 22;
             this.button3.Text = "Apply";
             this.button3.UseVisualStyleBackColor = true;
@@ -248,7 +249,7 @@
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.textBox2.Location = new System.Drawing.Point(852, 485);
+            this.textBox2.Location = new System.Drawing.Point(810, 485);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(46, 20);
             this.textBox2.TabIndex = 23;
@@ -304,9 +305,9 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(796, 535);
+            this.button5.Location = new System.Drawing.Point(749, 535);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(50, 23);
+            this.button5.Size = new System.Drawing.Size(55, 23);
             this.button5.TabIndex = 32;
             this.button5.Text = "Next";
             this.button5.UseVisualStyleBackColor = true;
@@ -315,11 +316,11 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(740, 509);
+            this.button4.Location = new System.Drawing.Point(688, 509);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(106, 23);
+            this.button4.Size = new System.Drawing.Size(116, 23);
             this.button4.TabIndex = 33;
-            this.button4.Text = "Apply and Next";
+            this.button4.Text = "Apply and Next and";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -333,12 +334,24 @@
             this.label6.TabIndex = 34;
             this.label6.Text = "Line:";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(810, 514);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(95, 17);
+            this.checkBox1.TabIndex = 36;
+            this.checkBox1.Text = "Auto-Translate";
+            this.toolTip1.SetToolTip(this.checkBox1, "Wil try to translate if the line have more than 2 words");
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(911, 562);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button4);
@@ -397,6 +410,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
