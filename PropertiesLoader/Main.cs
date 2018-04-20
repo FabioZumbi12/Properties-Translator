@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace PropertiesLoader
@@ -124,12 +122,17 @@ namespace PropertiesLoader
             buttonOpen.Enabled = true;
             buttonSave.Enabled = true;
             buttonSave.Enabled = true;
+            if (dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.Rows[0].Selected = true;
+                textBox4.Text = dataGridView1.Rows[0].Cells["Line"].Value?.ToString();
+            }                
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
-            textBox1.Text = dataGridView1.SelectedRows[0].Cells["Translation"].Value.ToString();
+            textBox1.Text = dataGridView1.SelectedRows[0].Cells["Translation"].Value?.ToString();
         }
 
         void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -190,6 +193,7 @@ namespace PropertiesLoader
                     {
                         row.Selected = true;
                         dataGridView1.FirstDisplayedScrollingRowIndex = row.Index;
+                        textBox4.Text = row.Cells["Line"].Value?.ToString();
                         break;
                     }
                 }
@@ -198,42 +202,95 @@ namespace PropertiesLoader
         
         private void button2_Click(object sender, EventArgs e)
         {
-            try
+            if (textBox1.Text.Length > 0)
             {
-                string strLangPair = string.Format("en|{0} ", textBox2);
-
-                // generate google translate request
-                // http://translate.google.com/translate_a/t?client=j&sl=en&tl=ru&text=some%20text
-                string url = String.Format("http://translate.google.com/translate_a/t?client=j&sl=en&tl={1}&text={0}",
-                  textBox1.Text, textBox2);
-
-                WebClient webClient = new WebClient();
-                byte[] resultBin = webClient.DownloadData(url);
-                string charset = webClient.ResponseHeaders["Content-Type"];
-                charset = charset.Substring(charset.LastIndexOf('=') + 1);
-
-                Encoding transmute = Encoding.GetEncoding(charset);
-                string result = transmute.GetString(resultBin);
-
-                // find result box and get a text
-                JObject item = JObject.Parse(result);
-                JToken token = item["sentences"];
-                String translation = string.Empty;
-
-                foreach (JToken childToken in token)
+                try
                 {
-                    string phrase = childToken["trans"].ToString();
-                    translation += phrase.TrimStart('"').TrimEnd('"');
-                }
+                    WebClient wc = new WebClient();
+                    wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0");
+                    wc.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+                    wc.Encoding = Encoding.UTF8;
 
-                textBox1.Text = translation;
-            }
-            catch (Exception ex)
+                    string url = string.Format(@"http://translate.google.com.tr/m?hl=en&sl={0}&tl={1}&ie=UTF-8&prev=_m&q={2}",
+                                                "us", textBox2.Text, Uri.EscapeUriString(textBox1.Text));
+
+                    string page = wc.DownloadString(url);
+                    page = page.Remove(0, page.IndexOf("<div dir=\"ltr\" class=\"t0\">")).Replace("<div dir=\"ltr\" class=\"t0\">", "");
+                    int last = page.IndexOf("</div>");
+                    page = page.Remove(last, page.Length - last);
+
+                    textBox1.Text = page;
+                }
+                catch (Exception ex)
+                {
+                    label3.ForeColor = System.Drawing.Color.Red;
+                    label3.Text = ex.Message;
+                }
+            }            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
             {
-                label3.ForeColor = System.Drawing.Color.Red;
-                label3.Text = ex.Message;
+                dataGridView1.SelectedRows[0].Cells["Translation"].Value = textBox1.Text;
             }
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                int index = dataGridView1.SelectedRows[0].Index + 1;
+                if (index < dataGridView1.Rows.Count)
+                {
+                    dataGridView1.SelectedRows[0].Selected = false;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = index;
+                    dataGridView1.Rows[index].Selected = true;
+                    textBox4.Text = dataGridView1.Rows[index].Cells["Line"].Value?.ToString();
+                }
+            }                           
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.Rows[e.RowIndex].Selected = true;
+            textBox4.Text = dataGridView1.Rows[e.RowIndex].Cells["Line"].Value?.ToString();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.SelectedRows[0].Cells["Translation"].Value = textBox1.Text;
+
+                int index = dataGridView1.SelectedRows[0].Index + 1;
+                if (index < dataGridView1.Rows.Count)
+                {
+                    dataGridView1.SelectedRows[0].Selected = false;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = index;
+                    dataGridView1.Rows[index].Selected = true;
+                    textBox4.Text = dataGridView1.Rows[index].Cells["Line"].Value?.ToString();
+                }
+            }
+        }
+
+        private void textBox4_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && dataGridView1.Rows.Count > 0 && textBox4.Text.Length > 0)
+            {
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    object value = row.Cells["Line"].Value;
+                    if (value != null && value.ToString().Equals(textBox4.Text))
+                    {
+                        row.Selected = true;
+                        dataGridView1.FirstDisplayedScrollingRowIndex = row.Index;
+                        textBox4.Text = row.Cells["Line"].Value?.ToString();
+                        break;
+                    }                    
+                }                              
+            }
+        }
     }
 }
