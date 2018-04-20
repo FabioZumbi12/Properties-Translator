@@ -43,6 +43,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -59,7 +60,6 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -170,6 +170,17 @@
             this.textBox4.TabIndex = 35;
             this.toolTip1.SetToolTip(this.textBox4, "Press ENTER to jump to line");
             this.textBox4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox4_KeyDown);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(810, 514);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(95, 17);
+            this.checkBox1.TabIndex = 36;
+            this.checkBox1.Text = "Auto-Translate";
+            this.toolTip1.SetToolTip(this.checkBox1, "Will try to translate if the line have more than 2 words");
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // buttonSave
             // 
@@ -333,17 +344,6 @@
             this.label6.Size = new System.Drawing.Size(30, 13);
             this.label6.TabIndex = 34;
             this.label6.Text = "Line:";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(810, 514);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 17);
-            this.checkBox1.TabIndex = 36;
-            this.checkBox1.Text = "Auto-Translate";
-            this.toolTip1.SetToolTip(this.checkBox1, "Wil try to translate if the line have more than 2 words");
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
