@@ -65,9 +65,7 @@ namespace PropertiesLoader
             table.Columns.Add("Translation", typeof(string));
 
             dataGridView1.Columns["Line"].Width = 50;
-            dataGridView1.Columns["Key"].Width = 300;
-            dataGridView1.Columns["Key"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView1.Columns["Translation"].Width = 300;
+            dataGridView1.Columns["Key"].Width = 200;
             dataGridView1.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
