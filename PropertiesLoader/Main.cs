@@ -299,5 +299,27 @@ namespace PropertiesLoader
                 }                              
             }
         }
+
+        System.Timers.Timer timer;
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox2.Checked)
+            {
+                timer?.Dispose();
+            }
+            else
+            {
+                timer = new System.Timers.Timer();
+                timer.Interval = int.Parse(textBox5.Text)*1000;
+                timer.SynchronizingObject = this;
+                timer.Elapsed += Timer_Elapsed;
+                timer.Start();
+            }            
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            button4.PerformClick();
+        }
     }
 }
