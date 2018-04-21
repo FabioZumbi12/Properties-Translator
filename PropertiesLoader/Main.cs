@@ -218,7 +218,7 @@ namespace PropertiesLoader
                     int last = page.IndexOf("</div>");
                     page = page.Remove(last, page.Length - last);
 
-                    textBox1.Text = page;
+                    textBox1.Text = page.Replace("&quot;", "\"");
 
                     label3.ForeColor = System.Drawing.Color.Black;
                     label3.Text = "No errors";
