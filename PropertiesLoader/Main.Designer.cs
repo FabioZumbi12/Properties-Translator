@@ -63,6 +63,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -115,6 +118,7 @@
             this.dataGridView1.Enabled = false;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.Location = new System.Drawing.Point(12, 70);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.AppWorkspace;
@@ -126,8 +130,9 @@
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridView1.Size = new System.Drawing.Size(1006, 375);
+            this.dataGridView1.Size = new System.Drawing.Size(728, 396);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.VirtualMode = true;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -156,7 +161,7 @@
             // 
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox3.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.textBox3.Location = new System.Drawing.Point(67, 506);
+            this.textBox3.Location = new System.Drawing.Point(59, 501);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(115, 20);
             this.textBox3.TabIndex = 27;
@@ -167,7 +172,7 @@
             // 
             this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox4.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.textBox4.Location = new System.Drawing.Point(67, 479);
+            this.textBox4.Location = new System.Drawing.Point(59, 474);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(54, 20);
             this.textBox4.TabIndex = 35;
@@ -178,7 +183,7 @@
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(923, 508);
+            this.checkBox1.Location = new System.Drawing.Point(868, 503);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(95, 17);
             this.checkBox1.TabIndex = 36;
@@ -190,7 +195,7 @@
             // 
             this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(571, 534);
+            this.checkBox2.Location = new System.Drawing.Point(516, 529);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(123, 17);
             this.checkBox2.TabIndex = 37;
@@ -204,9 +209,9 @@
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.Enabled = false;
             this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Location = new System.Drawing.Point(879, 40);
+            this.buttonSave.Location = new System.Drawing.Point(876, 40);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(140, 23);
+            this.buttonSave.Size = new System.Drawing.Size(121, 23);
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Save to File";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -218,7 +223,7 @@
             this.panel1.Controls.Add(this.progressBar1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Cursor = System.Windows.Forms.Cursors.WaitCursor;
-            this.panel1.Location = new System.Drawing.Point(394, 207);
+            this.panel1.Location = new System.Drawing.Point(383, 200);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(241, 87);
             this.panel1.TabIndex = 19;
@@ -246,16 +251,16 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.textBox1.Location = new System.Drawing.Point(188, 477);
+            this.textBox1.Location = new System.Drawing.Point(180, 472);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(607, 49);
+            this.textBox1.Size = new System.Drawing.Size(560, 49);
             this.textBox1.TabIndex = 20;
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(801, 477);
+            this.button2.Location = new System.Drawing.Point(746, 472);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 23);
             this.button2.TabIndex = 21;
@@ -266,7 +271,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(801, 529);
+            this.button3.Location = new System.Drawing.Point(746, 524);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(55, 23);
             this.button3.TabIndex = 22;
@@ -278,7 +283,7 @@
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.textBox2.Location = new System.Drawing.Point(923, 479);
+            this.textBox2.Location = new System.Drawing.Point(868, 474);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(46, 20);
             this.textBox2.TabIndex = 23;
@@ -286,13 +291,14 @@
             // 
             // backgroundWorker1
             // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 534);
+            this.label3.Location = new System.Drawing.Point(9, 529);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 24;
@@ -302,7 +308,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(941, 9);
+            this.label4.Location = new System.Drawing.Point(919, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 25;
@@ -312,7 +318,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 511);
+            this.label5.Location = new System.Drawing.Point(9, 506);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 13);
             this.label5.TabIndex = 26;
@@ -324,7 +330,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.label7.Location = new System.Drawing.Point(876, 25);
+            this.label7.Location = new System.Drawing.Point(873, 25);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 13);
             this.label7.TabIndex = 31;
@@ -334,7 +340,7 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(862, 529);
+            this.button5.Location = new System.Drawing.Point(807, 524);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(55, 23);
             this.button5.TabIndex = 32;
@@ -345,7 +351,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(801, 503);
+            this.button4.Location = new System.Drawing.Point(746, 498);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(116, 23);
             this.button4.TabIndex = 33;
@@ -357,7 +363,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(31, 482);
+            this.label6.Location = new System.Drawing.Point(23, 477);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(30, 13);
             this.label6.TabIndex = 34;
@@ -366,7 +372,7 @@
             // textBox5
             // 
             this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox5.Location = new System.Drawing.Point(771, 531);
+            this.textBox5.Location = new System.Drawing.Point(716, 526);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(24, 20);
             this.textBox5.TabIndex = 38;
@@ -376,18 +382,57 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(711, 534);
+            this.label8.Location = new System.Drawing.Point(656, 529);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(59, 13);
             this.label8.TabIndex = 39;
             this.label8.Text = "Interval (s):";
+            // 
+            // listBox1
+            // 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(746, 85);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(250, 381);
+            this.listBox1.TabIndex = 42;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(746, 70);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(81, 13);
+            this.label10.TabIndex = 43;
+            this.label10.Text = "New Lines: 0";
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(868, 526);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(113, 17);
+            this.checkBox3.TabIndex = 44;
+            this.checkBox3.Text = "Next -> New Lines";
+            this.toolTip1.SetToolTip(this.checkBox3, "Will try to translate if the line have more than 2 words");
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(1030, 564);
+            this.ClientSize = new System.Drawing.Size(1008, 551);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.checkBox2);
@@ -454,6 +499,9 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 

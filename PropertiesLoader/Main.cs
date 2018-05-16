@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -25,6 +26,7 @@ namespace PropertiesLoader
             backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
         }
 
+        //oad en_us
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -70,6 +72,7 @@ namespace PropertiesLoader
             dataGridView1.Columns["Translation"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
+        //load custom
         private void button1_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -95,7 +98,9 @@ namespace PropertiesLoader
                         {
                             string key = row.Split('=')[0];
                             if (key.Contains("*")) continue;
-                            table.Rows.Add(line, key, string.Join("=", row.Split('=').Skip(1).ToArray()));
+
+                            string value = string.Join("=", row.Split('=').Skip(1).ToArray());
+                            table.Rows.Add(line, key, value);
                         }
                     }
                     EndLoading();
@@ -107,6 +112,7 @@ namespace PropertiesLoader
                     buttonSave.Enabled = false;
                     panel1.Visible = true;
                     label7.Visible = false;
+                    listBox1.Enabled = false;
 
                     backgroundWorker1.RunWorkerAsync();
                 }                
@@ -121,11 +127,13 @@ namespace PropertiesLoader
             buttonOpen.Enabled = true;
             buttonSave.Enabled = true;
             buttonSave.Enabled = true;
+            listBox1.Enabled = true;
             if (dataGridView1.Rows.Count > 0)
             {
                 dataGridView1.Rows[0].Selected = true;
                 textBox4.Text = dataGridView1.Rows[0].Cells["Line"].Value?.ToString();
-            }                
+            }
+            backgroundWorker1.CancelAsync();
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -134,11 +142,58 @@ namespace PropertiesLoader
             textBox1.Text = dataGridView1.SelectedRows[0].Cells["Translation"].Value?.ToString();
         }
 
+        //thread safe
+        delegate void SetTextCallback(string text);
+        private void AddToList(string diff)
+        {
+            if (listBox1.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(AddToList);
+                Invoke(d, new object[] { diff });
+            }
+            else
+            {
+                if (!listBox1.Items.Contains(diff))
+                    listBox1.Items.Add(diff);
+            }
+        }
+
+        //thread safe
+        private void SetText(string text)
+        {
+            if (label10.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                Invoke(d, new object[] { text });
+            }
+            else
+            {
+                label10.Text = text;
+            }
+        }
+
         void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             int count = 0;
             string[] custom = File.ReadAllLines(fileLocCustom.Text);
 
+            //get differences
+            IEnumerable<string> copy = lines.Where(ln => custom.Where(ln2 => ln.Split('=')[0] == ln2.Split('=')[0]).Count() == 0);
+
+            int total = custom.Length + copy.Count();
+            int diffTtl = 0;
+            foreach (string diff in copy)
+            {
+                AddToList(diff.Split('=')[0]);
+                count++;
+
+                double med = (double)count / total;
+                backgroundWorker1.ReportProgress((int)(med * 100));
+
+                diffTtl++;
+                SetText("New Lines: " + diffTtl);
+            }
+            
             foreach (string row in custom)
             {
                 count++;
@@ -149,13 +204,13 @@ namespace PropertiesLoader
 
                     if (key.Contains("*")) continue;
 
-                    DataRow dr = table.Select("Key = '" + key.Replace("'", "''") + "'").FirstOrDefault();
+                    DataRow dr = table.Select("Key = '" + key.Replace("'", "''") + "'").FirstOrDefault();                    
                     if (dr != null && !dr["Translation"].Equals(value))
                     {
                         dr["Translation"] = value;
                     }
                 }
-                double med = (double)count / custom.Length;
+                double med = (double)count / total;
                 backgroundWorker1.ReportProgress((int)(med * 100));
             }
         }
@@ -174,7 +229,6 @@ namespace PropertiesLoader
                 int line = int.Parse(row["Line"].ToString());
                 string key = row["Key"].ToString();
                 string value = row["Translation"].ToString();
-
                 lines[line-1] = key + "=" + value;
             }
             File.WriteAllLines(fileLocCustom.Text, lines);
@@ -201,7 +255,7 @@ namespace PropertiesLoader
         
         private void button2_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Length > 0)
+            if (textBox1.Text.Split(' ').Length > 2)
             {
                 try
                 {
@@ -241,17 +295,28 @@ namespace PropertiesLoader
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0 && dataGridView1.SelectedRows.Count > 0)
+            if (checkBox3.Checked)
             {
-                int index = dataGridView1.SelectedRows[0].Index + 1;
-                if (index < dataGridView1.Rows.Count)
+                int index = listBox1.SelectedIndex + 1;
+                if (index < listBox1.Items.Count)
                 {
-                    dataGridView1.SelectedRows[0].Selected = false;
-                    dataGridView1.FirstDisplayedScrollingRowIndex = index;
-                    dataGridView1.Rows[index].Selected = true;
-                    textBox4.Text = dataGridView1.Rows[index].Cells["Line"].Value?.ToString();
+                    listBox1.SelectedIndex = index;
                 }
-            }                           
+            }
+            else
+            {
+                if (dataGridView1.Rows.Count > 0 && dataGridView1.SelectedRows.Count > 0)
+                {
+                    int index = dataGridView1.SelectedRows[0].Index + 1;
+                    if (index < dataGridView1.Rows.Count)
+                    {
+                        dataGridView1.SelectedRows[0].Selected = false;
+                        dataGridView1.FirstDisplayedScrollingRowIndex = index;
+                        dataGridView1.Rows[index].Selected = true;
+                        textBox4.Text = dataGridView1.Rows[index].Cells["Line"].Value?.ToString();
+                    }
+                }
+            }                                     
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -264,20 +329,16 @@ namespace PropertiesLoader
         {
             if (dataGridView1.Rows.Count > 0 && dataGridView1.SelectedRows.Count > 0)
             {
+                //apply
                 dataGridView1.SelectedRows[0].Cells["Translation"].Value = textBox1.Text;
 
-                int index = dataGridView1.SelectedRows[0].Index + 1;
-                if (index < dataGridView1.Rows.Count)
-                {
-                    dataGridView1.SelectedRows[0].Selected = false;
-                    dataGridView1.FirstDisplayedScrollingRowIndex = index;
-                    dataGridView1.Rows[index].Selected = true;
-                    textBox4.Text = dataGridView1.Rows[index].Cells["Line"].Value?.ToString();
+                //next
+                button5.PerformClick();                
 
-                    if (checkBox1.Checked && textBox1.Text.Split(' ').Length > 2)
-                    {                        
-                        button2.PerformClick();
-                    }
+                //auto translate
+                if (checkBox1.Checked)
+                {
+                    button2.PerformClick();
                 }
             }
         }
@@ -320,6 +381,23 @@ namespace PropertiesLoader
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             button4.PerformClick();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string key = listBox1.GetItemText(listBox1.SelectedItem);
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                object value = row.Cells["Key"].Value;
+                if (value != null && value.ToString().Equals(key))
+                {
+                    row.Selected = true;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = row.Index;
+                    dataGridView1.Rows[row.Index].Selected = true;
+                    textBox4.Text = row.Cells["Line"].Value?.ToString();
+                    break;
+                }
+            }
         }
     }
 }
