@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,6 +25,9 @@ namespace PropertiesLoader
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
             backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
+
+            CultureInfo ci = CultureInfo.InstalledUICulture;
+            textBox2.Text = ci.Name;
         }
 
         //oad en_us
@@ -55,7 +59,7 @@ namespace PropertiesLoader
                         table.Rows.Add(line, key, string.Join("=", row.Split('=').Skip(1).ToArray()));
                     }                        
                 }
-            }            
+            }
         }
 
         private void InitTable()
@@ -111,7 +115,6 @@ namespace PropertiesLoader
                     buttonOpen.Enabled = false;
                     buttonSave.Enabled = false;
                     panel1.Visible = true;
-                    label7.Visible = false;
                     listBox1.Enabled = false;
 
                     backgroundWorker1.RunWorkerAsync();
@@ -121,6 +124,7 @@ namespace PropertiesLoader
 
         void EndLoading()
         {
+            backgroundWorker1.CancelAsync();
             panel1.Visible = false;
             dataGridView1.Enabled = true;
             button1.Enabled = true;
@@ -132,8 +136,8 @@ namespace PropertiesLoader
             {
                 dataGridView1.Rows[0].Selected = true;
                 textBox4.Text = dataGridView1.Rows[0].Cells["Line"].Value?.ToString();
-            }
-            backgroundWorker1.CancelAsync();
+            }            
+            checkBox3.CheckState = listBox1.Items.Count > 0 ? CheckState.Checked : CheckState.Unchecked;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -179,9 +183,10 @@ namespace PropertiesLoader
 
             //get differences
             IEnumerable<string> copy = lines.Where(ln => custom.Where(ln2 => ln.Split('=')[0] == ln2.Split('=')[0]).Count() == 0);
-
+            
             int total = custom.Length + copy.Count();
             int diffTtl = 0;
+                        
             foreach (string diff in copy)
             {
                 AddToList(diff.Split('=')[0]);
@@ -193,7 +198,7 @@ namespace PropertiesLoader
                 diffTtl++;
                 SetText("New Lines: " + diffTtl);
             }
-            
+
             foreach (string row in custom)
             {
                 count++;
@@ -218,6 +223,7 @@ namespace PropertiesLoader
         void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
+            label9.Text = progressBar1.Value+"% completed...";
             if (e.ProgressPercentage == 100)
                 EndLoading();
         }
@@ -232,7 +238,7 @@ namespace PropertiesLoader
                 lines[line-1] = key + "=" + value;
             }
             File.WriteAllLines(fileLocCustom.Text, lines);
-            label7.Visible = true;
+            buttonSave.BackColor = System.Drawing.SystemColors.ControlLight;
         }
 
         private void textBox3_KeyDown(object sender, KeyEventArgs e)
@@ -255,7 +261,7 @@ namespace PropertiesLoader
         
         private void button2_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Split(' ').Length > 2)
+            if (!checkBox4.Checked || textBox1.Text.Split(' ').Length > 2)
             {
                 try
                 {
@@ -398,6 +404,11 @@ namespace PropertiesLoader
                     break;
                 }
             }
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            buttonSave.BackColor = System.Drawing.Color.Red;
         }
     }
 }
